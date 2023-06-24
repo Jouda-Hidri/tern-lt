@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hello
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: hello
+              image: curlimages/curl
+              imagePullPolicy: IfNotPresent
+              command:
+                - "curl"
+                - "-d"
+                - '{"text":"jouda"}'
+                - "-H"
+                - "Content-Type: application/json"
+                - "-X"
+                - "POST"
+                - "http://192.168.59.104:31297/"
+          restartPolicy: OnFailure
